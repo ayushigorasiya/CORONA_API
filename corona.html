@@ -2,162 +2,154 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corona Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COVID-19 Dashboard</title>
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Open Sans', sans-serif;
-            height: 100vh;
+            background: url('images/corona.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url(images/corona.jpg) no-repeat;
-            background-size: cover;
-            height: 100vh;
-            line-height: 1.6;
-            color: white;
-
         }
 
         .container {
-            width: 90%;
             max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.658);
+            border-radius: 12px;
+            padding: 30px 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
             text-align: center;
         }
 
-        header {
-            margin-top: 100px;
-            font-size: 1.2em;
-            background-color: #ffffff85;
-            border-radius: 15px;
-            padding: 30px 0;
-
-        }
-
-        h1 {
-            font-size: 3em;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: 1.2em;
-            color: #777;
-            margin-bottom: 40px;
-            margin-left: 10px;
-            font-weight: 500;
-            color: #5a5959;
+        header h1 {
+            color: #007bff;
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            font-weight: 700;
         }
 
         .stats {
-            display: flex;
-            justify-content: space-evenly;
-            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
         .stat-box {
-            background: #ffffffa4;
-            padding: 30px;
-            margin: 10px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 30%;
+            background: #ffffff7a;
+            border-left: 6px solid #007bff;
+            border-radius: 10px;
+            padding: 25px 20px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
+        .stat-box.deaths {
+            border-left-color: #dc3545;
+        }
+
+        .stat-box.recovered {
+            border-left-color: #28a745;
+        }
+
         .stat-box:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
 
         .stat-box h3 {
-            color: #007bff;
-            font-size: 1.4em;
-            margin-bottom: 15px;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: #444;
         }
 
         .stat-box p {
-            font-size: 1.6em;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        .country-section {
-            margin-top: 60px;
-            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #222;
         }
 
         .country-section h2 {
-            font-size: 2em;
-            color: #333;
+            color: #007bff;
+            font-size: 2rem;
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
-        input {
-            padding: 12px;
-            width: 50%;
-            font-size: 1.1em;
-            background-color: rgba(255, 255, 255, 0.558);
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+        input[type="text"] {
+            padding: 14px 18px;
+            width: 90%;
+            max-width: 400px;
+            font-size: 1.1rem;
+            border: 2px solid #ccccccc2;
+            border-radius: 8px;
             transition: border-color 0.3s ease;
+            margin-bottom: 25px;
         }
 
-        input:focus {
-            border-color: #007bff;
+        input[type="text"]:focus {
             outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px #007bff;
         }
 
         #country-data {
-            padding: 20px;
-            background: #ffffffa3;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            width: 50%;
-            display: inline-block;
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 25px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
             text-align: left;
         }
 
         #country-data h3 {
-            font-size: 1.8em;
-            color: #007bff;
+            font-size: 1.5rem;
             margin-bottom: 15px;
+            color: #007bff;
+            font-weight: 600;
         }
 
         #country-data p {
-            font-size: 1.4em;
+            font-size: 1.1rem;
             margin-bottom: 10px;
+            color: #333;
+            font-weight: 500;
         }
 
-        @media screen and (max-width: 768px) {
-            .stats {
-                flex-direction: column;
-                align-items: center;
+        #country-data p strong {
+            color: #555;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
             }
 
-            .stat-box {
-                width: 80%;
-                margin: 10px auto;
+            .stat-box p {
+                font-size: 1.5rem;
             }
 
-            input {
-                width: 80%;
+            input[type="text"] {
+                width: 100%;
             }
 
             #country-data {
-                width: 80%;
+                max-width: 100%;
+                padding: 20px;
             }
         }
     </style>
@@ -166,10 +158,7 @@
 <body>
     <div class="container">
         <header>
-
             <h1>COVID-19 Dashboard</h1>
-
-
         </header>
 
         <div class="stats">
@@ -177,19 +166,20 @@
                 <h3>Total Cases</h3>
                 <p id="total-cases">Loading...</p>
             </div>
-            <div class="stat-box">
+            <div class="stat-box deaths">
                 <h3>Total Deaths</h3>
                 <p id="total-deaths">Loading...</p>
             </div>
-            <div class="stat-box">
+            <div class="stat-box recovered">
                 <h3>Total Recovered</h3>
                 <p id="total-recovered">Loading...</p>
             </div>
         </div>
 
         <div class="country-section">
-            <h2>COVID-19 Data by Country</h2>
-            <input type="text" id="country-input" placeholder="Enter Country..." onkeyup="getCountryData()">
+            <h2>Search Country Data</h2>
+            <input type="text" id="country-input" placeholder="Enter country name..." onkeyup="getCountryData()"
+                autocomplete="off" />
             <div id="country-data"></div>
         </div>
     </div>
@@ -200,9 +190,9 @@
                 const response = await fetch('https://disease.sh/v3/covid-19/all');
                 const data = await response.json();
 
-                document.getElementById('total-cases').innerHTML = `<strong>${data.cases.toLocaleString()}</strong>`;
-                document.getElementById('total-deaths').innerHTML = `<strong>${data.deaths.toLocaleString()}</strong>`;
-                document.getElementById('total-recovered').innerHTML = `<strong>${data.recovered.toLocaleString()}</strong>`;
+                document.getElementById('total-cases').textContent = data.cases.toLocaleString();
+                document.getElementById('total-deaths').textContent = data.deaths.toLocaleString();
+                document.getElementById('total-recovered').textContent = data.recovered.toLocaleString();
             } catch (error) {
                 console.error('Error fetching global data:', error);
             }
@@ -210,28 +200,29 @@
 
         async function getCountryData() {
             const country = document.getElementById('country-input').value.trim();
-            if (country) {
-                try {
-                    const response = await fetch(`https://disease.sh/v3/covid-19/countries/${country}`);
-                    if (response.ok) {
-                        const data = await response.json();
-                        document.getElementById('country-data').innerHTML = `
-              <h3>${data.country}</h3>
-              <p><strong>Total Cases:</strong> ${data.cases.toLocaleString()}</p>
-              <p><strong>Total Deaths:</strong> ${data.deaths.toLocaleString()}</p>
-              <p><strong>Total Recovered:</strong> ${data.recovered.toLocaleString()}</p>
-              <p><strong>Active Cases:</strong> ${data.active.toLocaleString()}</p>
-            `;
-                    } else {
-                        document.getElementById('country-data').innerHTML = `<p>Data not found for "${country}"</p>`;
-                    }
-                } catch (error) {
-                    console.error('Error fetching country data:', error);
-                    document.getElementById('country-data').innerHTML = `<p>Something went wrong. Please try again.</p>`;
-                }
+            if (!country) {
+                document.getElementById('country-data').innerHTML = '';
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://disease.sh/v3/covid-19/countries/${country}`);
+                if (!response.ok) throw new Error('Country not found');
+                const data = await response.json();
+
+                document.getElementById('country-data').innerHTML = `
+          <h3>${data.country}</h3>
+          <p><strong>Total Cases:</strong> ${data.cases.toLocaleString()}</p>
+          <p><strong>Total Deaths:</strong> ${data.deaths.toLocaleString()}</p>
+          <p><strong>Total Recovered:</strong> ${data.recovered.toLocaleString()}</p>
+          <p><strong>Active Cases:</strong> ${data.active.toLocaleString()}</p>
+        `;
+            } catch (error) {
+                document.getElementById('country-data').innerHTML = `<p style="color: red;">No data found for "${country}"</p>`;
             }
         }
 
+        // Load global data on page load
         getGlobalData();
     </script>
 </body>
